@@ -8,14 +8,13 @@ int main (int argc, char** argv) {
   
       char filename[100];
 
-    /* step 1: create head pointer to linked list: memory */
+    /* create head pointer to linked list: memory */
     FILE* src_file;
     row_of_memory* memory = NULL ;
     row_of_memory** memoryPtr = &memory ;
     int errorID;
     
-    /* step 2: determine filename, then open it */
-
+    /* determine filename, then open it */
     // if not exact two args are passed in, print error msg and return immediately
     if (argc != 2) {
         errorID = 1;
@@ -34,7 +33,7 @@ int main (int argc, char** argv) {
         return (errorID);
     }
 
-    /* step 4: call function: reverse_assemble() in lc4_disassembler.c */
+    /* call function: reverse_assemble() in lc4_disassembler.c */
     errorID = reverse_assemble(memory);
     if (errorID != 0) {
         printf("reverse assembling failed\n");
@@ -42,10 +41,10 @@ int main (int argc, char** argv) {
         return 3;
     };
 
-    /* step 5: call function: print_list() in lc4_memory.c */
+    /* call function: print_list() in lc4_memory.c */
     print_list(memory);
 
-    /* step 5.5: call function: write_asm_file() in lc4_disassembler.c */
+    /* call function: write_asm_file() in lc4_disassembler.c */
     errorID = write_asm_file(filename, memory);
     if (errorID != 0) {
         printf("write to .asm file failed\n");
@@ -53,7 +52,7 @@ int main (int argc, char** argv) {
         return 3;
     };
 
-    /* step 6: call function: delete_list() in lc4_memory.c */
+    /* call function: delete_list() in lc4_memory.c */
     errorID = delete_list(memoryPtr);
     if (errorID != 0) {
         printf("delete list failed\n");

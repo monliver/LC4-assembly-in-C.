@@ -1,10 +1,3 @@
-/************************************************************************/
-/* File Name : lc4_disassembler.c 										*/
-/* Purpose   : This file implements the reverse assembler 				*/
-/*             for LC4 assembly.  It will be called by main()			*/
-/*             															*/
-/* Author(s) : Renjun Ma and Yitian Hou									*/
-/************************************************************************/
 #include <stdio.h>
 #include "lc4_memory.h"
 #include <stdlib.h>

@@ -1,0 +1,11 @@
+***** Collaboration and submit the same code *****
+
+Our team consists of:
+- Yitian Hou (Penn ID: 76855950)
+- Renjun Ma  (Penn ID: 42169633)
+ 
+We both independently completed LinkedList functions and finalized the version that will be used in this project in lc4_memory.c.
+
+We discussed and wrote lc4_loader.c, lc4_disassembler.c, lc4.c and Extra Credit together.
+
+We tested, debug, and fixed problems together.

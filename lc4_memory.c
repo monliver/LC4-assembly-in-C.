@@ -1,19 +1,9 @@
-/************************************************************************/
-/* File Name : lc4_memory.c		 																					*/
-/* Purpose   : This file implements the linked_list helper functions		*/
-/* 			   to manage the LC4 memory																			*/
-/*             							 		  																			*/
-/* Author(s) : Renjun Ma and Yitian Hou																	*/
-/************************************************************************/
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "lc4_memory.h"
 
 
-/*
- * adds a new node to a linked list pointed to by head
- */
 int add_to_list (row_of_memory** head,
 		 short unsigned int address,
 		 short unsigned int contents)
@@ -30,7 +20,6 @@ int add_to_list (row_of_memory** head,
       current_node = current_node->next;
     }
 
-    /* allocate memory for a single node */
 		row_of_memory* new_node = (row_of_memory*) malloc(sizeof(row_of_memory));
 		// -1 if malloc fails
 		if (new_node == NULL){
@@ -76,113 +65,6 @@ int add_to_list (row_of_memory** head,
 }
 
 
-
-
-/*
- * search linked list by address field, returns node if found
- */
-row_of_memory* search_address (row_of_memory* head,
-			       short unsigned int address )
-{
-  if (head == NULL) {
-      return NULL;
-    }
-	/* traverse linked list, searching each node for "address"  */
-  row_of_memory* this_node = head;
-
-  while (this_node != NULL && this_node->address != address){
-    this_node = this_node->next;
-  }
-	/* return pointer to node in the list if item is found */
-  if (this_node != NULL) {
-    return this_node;
-  }
-	/* return NULL if list is empty or if "address" isn't found */
-
-	return NULL ;
-}
-
-/*
- * search linked list by opcode field, returns node if found
- */
-row_of_memory* search_opcode  (row_of_memory* head,
-				      short unsigned int opcode  )
-{
-    /* opcode parameter is in the least significant 4 bits of the short int and ranges from 0-15 */
-		/* see assignment instructions for a detailed description */
-    if (head == NULL) {
-      return NULL;
-    }
-    /* traverse linked list until node is found with matching opcode in the most significant 4 bits
-	   AND "assembly" field of node is NULL */
-    while (head != NULL){
-      if (((head->contents >> 12) == opcode) && (head->assembly == NULL) && (head -> address <= 0x1FFF || (head->address >= 0x8000 && head->address <= 0x9FFF))) {
-          return head;   
-      }
-      head = head->next;
-    }
-    	/* return NULL if list is empty or if no matching nodes */
-      return NULL;
-}
-
-
-
-/*
- * EXTRA CREDIT
- */
-void print_list (row_of_memory* head )
-{
-    /* make sure head isn't NULL */
-    if (head == NULL) {
-        printf("Linked list is empty");
-    } else {
-        /* print out a header */
-        char label[] = "<label>";
-        char address[] = "<address>";
-        char contents[] = "<contents>";
-        char assembly[] = "<assembly>";
-        char empty[] = "";
-
-        printf("%-20s %-20s %-20s %-20s \n", label, address, contents, assembly);
-    
-        /* don't print assembly directives for non opcode 1 instructions if you are doing extra credit */
-
-        /* traverse linked list, print contents of each node */
-
-        while (head != NULL) {
-            // print label
-            if (head->label == NULL) {
-                printf("%-20s ", empty);
-            } else {
-                printf("%-20s ", head->label);
-            }
-            // print address and contents
-            printf("%-20.04X %-20.04X ", head->address, head->contents);
-            
-            // print assembly
-            if (head->assembly == NULL) {
-                printf("%-20s \n", empty);
-            } else if ((head->contents >> 12) != 0b0001) {
-                printf("%-20s \n", empty);
-            } else if ((head->address >= 0x2000 && head->address <= 0x7FFF)
-            || (head->address >= 0xA000 && head->address <= 0xFFFF)) {
-                printf("%-20s \n", empty);
-            } else {
-                printf("%-20s \n", head->assembly);
-            }
-            head = head->next;
-        }
-    }
-    
-    return ;
-}
-
-
-
-
-
-
-
 /*
  * delete entire linked list
  */
@@ -211,12 +93,6 @@ int delete_list    (row_of_memory** head )
 }
 
 
-
-
-
-/*
- * EXTRA CREDIT: save entire linked list to .asm file
- */
 int write_asm_file (char* filename, row_of_memory* memory)
 {
     // take the filename passed in the argument "filename", change the extension of the file into ".asm"
